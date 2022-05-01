@@ -5,3 +5,4 @@ poetry.lock
 pyproject.toml
 *.pyc
 discord.log
+test.py
