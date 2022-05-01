@@ -11,6 +11,9 @@ logger.addHandler(handler)
 
 class Bot(discord.Client):
 
+    def __init__(self):
+        super().__init__()
+        self.prefix = "!"
 
     # 登入bot提示訊息
     async def on_ready(self):
@@ -23,11 +26,18 @@ class Bot(discord.Client):
         # 避免被自己的訊息觸發
         if message.author == self.user:
             return
-
         
-        if message.content.startswith(f'!Hello'):
-            print(f'{message.author} called "!Hello"')
-            await message.reply('Hello')
+        # 回覆 Hello
+        if message.content.startswith(f"{self.prefix}Hello"):
+            print(f"{message.author} called 'Hello'")
+            await message.reply("Hello")
+
+        # 更改前綴
+        if message.content.startswith(f"{self.prefix}set_prefix"):
+            new_prefix = message.content.replace(f"{self.prefix}set_prefix ","")
+            await message.reply(f"change prefix from {self.prefix} to {new_prefix}")
+            self.prefix = new_prefix
+            print(f"{message.author} change prefix to '{self.prefix}'")
 
 bot = Bot()
 bot.run(input('enter your bot token\n'))
