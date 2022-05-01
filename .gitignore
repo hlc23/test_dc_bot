@@ -3,3 +3,5 @@ bot_token.py
 .replit
 poetry.lock
 pyproject.toml
+*.pyc
+discord.log
