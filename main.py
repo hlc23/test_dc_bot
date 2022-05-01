@@ -27,9 +27,16 @@ class Bot(discord.Client):
         if message.author == self.user:
             return
 
-        # 回覆 Hello
-        if message.content.startswith(f"{self.prefix}Hello"):
-            print(f"{message.author} called 'Hello'")
+        # 回覆 help
+        if message.content.startswith(f"{self.prefix}help"):
+            print(f"{message.author} used 'help'")
+            with open("./data/help.txt", mode="r", encoding="utf-8") as help_file:
+                help_data = help_file.read()
+            await message.reply(help_data)
+
+        # 回覆 hello
+        if message.content.startswith(f"{self.prefix}hello"):
+            print(f"{message.author} used 'hello'")
             await message.reply("Hello")
 
 
