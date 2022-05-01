@@ -32,12 +32,6 @@ class Bot(discord.Client):
             print(f"{message.author} called 'Hello'")
             await message.reply("Hello")
 
-        # 更改前綴
-        if message.content.startswith(f"{self.prefix}set_prefix"):
-            new_prefix = message.content.replace(f"{self.prefix}set_prefix ","")
-            await message.reply(f"change prefix from {self.prefix} to {new_prefix}")
-            self.prefix = new_prefix
-            print(f"{message.author} change prefix to '{self.prefix}'")
 
 bot = Bot()
 bot.run(input('enter your bot token\n'))
