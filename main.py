@@ -26,7 +26,7 @@ class Bot(discord.Client):
         # 避免被自己的訊息觸發
         if message.author == self.user:
             return
-        
+
         # 回覆 Hello
         if message.content.startswith(f"{self.prefix}Hello"):
             print(f"{message.author} called 'Hello'")
