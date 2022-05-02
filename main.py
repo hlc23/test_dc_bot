@@ -10,7 +10,7 @@ logger.addHandler(handler)
 
 
 class Bot(discord.Client):
-
+    # init
     def __init__(self):
         super().__init__()
         self.prefix = "!"
