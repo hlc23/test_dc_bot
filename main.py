@@ -47,34 +47,36 @@ class Bot(discord.Client):
             with open("./data/help.txt", mode="r", encoding="utf-8") as help_file:
                 help_data = help_file.read()
             await message.reply(help_data)
-
+          
         # 回覆 hello
         if message.content.startswith(f"{self.prefix}hello"):
             print(f"{message.author} used 'hello'")
             await message.reply("Hello")
-
+          
         # 回覆 hi
         if message.content.startswith(f"{self.prefix}hi"):
             print(f"{message.author} used 'hi'")
             await message.reply("Hi")
-
+          
+        
+        # change prefix 
         if message.content.startswith(f"{self.prefix}prefix"):
             print(f"{message.author} used 'prefix'")
-            new_prefix = message.content.replace(f"{self.prefix}prefix ","")
+            new_prefix = message.content.split(" ")[1]
             await message.reply(f"change prefix from '{self.prefix}' to '{new_prefix}'.")
             change_config("prefix",new_prefix)
             print(f"prefix set '{new_prefix}'")
             self.prefix = new_prefix
 
-          
         # 重新載入
         if message.content == f"{self.prefix}reload":
             print(f"{message.author} used 'reload'")
             await message.reply("reloading...")
             os.system('python3 reload.py')
             sys.exit()
+  
+        
 
-      
 bot = Bot()
 keep_alive.keep_alive()
 bot.run(os.getenv('token'))
