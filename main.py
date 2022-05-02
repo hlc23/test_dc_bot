@@ -3,6 +3,7 @@ import logging
 import os
 import keep_alive
 import sys
+import json
 
 # 設定日誌
 logger = logging.getLogger('discord')
@@ -11,12 +12,22 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
+# change config
+def change_config(key, value):
+    print(f"change config: set {key} to {value}")
+    with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
+        config_data = json.load(config_file)
+    config_data[key] = value
+    with open("./data/config.json",mode="w",encoding="utf-8") as config_file:
+        json.dump(config_data,config_file,indent=4,ensure_ascii=False)
 
 class Bot(discord.Client):
     # init
     def __init__(self):
         super().__init__()
-        self.prefix = "!"
+        with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
+            config = json.load(config_file)
+        self.prefix = config['prefix']
 
     # 登入bot提示訊息
     async def on_ready(self):
@@ -47,9 +58,19 @@ class Bot(discord.Client):
             print(f"{message.author} used 'hi'")
             await message.reply("Hi")
 
+        if message.content.startswith(f"{self.prefix}prefix"):
+            print(f"{message.author} used 'prefix'")
+            new_prefix = message.content.replace(f"{self.prefix}prefix ","")
+            await message.reply(f"change prefix from '{self.prefix}' to '{new_prefix}'.")
+            change_config("prefix",new_prefix)
+            print(f"prefix set '{new_prefix}'")
+            self.prefix = new_prefix
+
+          
         # 重新載入
         if message.content == f"{self.prefix}reload":
             print(f"{message.author} used 'reload'")
+            await message.reply("reloading...")
             os.system('python3 reload.py')
             sys.exit()
 
