@@ -2,6 +2,7 @@ import discord
 import logging
 import os
 import keep_alive
+import sys
 
 # 設定日誌
 logger = logging.getLogger('discord')
@@ -41,7 +42,18 @@ class Bot(discord.Client):
             print(f"{message.author} used 'hello'")
             await message.reply("Hello")
 
+        # 回覆 hi
+        if message.content.startswith(f"{self.prefix}hi"):
+            print(f"{message.author} used 'hi'")
+            await message.reply("Hi")
 
+        # 重新載入
+        if message.content == f"{self.prefix}reload":
+            print(f"{message.author} used 'reload'")
+            os.system('python3 reload.py')
+            sys.exit()
+
+      
 bot = Bot()
 keep_alive.keep_alive()
 bot.run(os.getenv('token'))
