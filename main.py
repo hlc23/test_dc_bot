@@ -1,5 +1,7 @@
 import discord
 import logging
+import os
+import keep_alive
 
 # 設定日誌
 logger = logging.getLogger('discord')
@@ -41,4 +43,5 @@ class Bot(discord.Client):
 
 
 bot = Bot()
-bot.run(input('enter your bot token\n'))
+keep_alive.keep_alive()
+bot.run(os.getenv('token'))
