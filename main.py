@@ -23,8 +23,9 @@ def change_config(key, value):
 
 class Bot(discord.Client):
     # init
-    def __init__(self):
+    def __init__(self,intent):
         super().__init__()
+        self.intent = discord.Intents.all()
         with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
             config = json.load(config_file)
         self.prefix = config['prefix']
@@ -76,7 +77,7 @@ class Bot(discord.Client):
             sys.exit()
   
         
-
-bot = Bot()
+intent = discord.Intents.all()
+bot = Bot(intent)
 keep_alive.keep_alive()
 bot.run(os.getenv('token'))
