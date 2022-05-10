@@ -21,6 +21,13 @@ def change_config(key, value):
     with open("./data/config.json",mode="w",encoding="utf-8") as config_file:
         json.dump(config_data,config_file,indent=4,ensure_ascii=False)
 
+
+with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
+    config = json.load(config_file)
+
+prefix = config["prefix"]
+
+
 intent = discord.Intents.all()
 
 bot = discord.Client(intents=intent)
@@ -136,5 +143,5 @@ async def on_member_leave(member):
     channel = bot.get_channel(967703102436290580)
     await channel.send(f"{member} leaved!")
 
-bot.run(os.getenv(token))
+bot.run(os.getenv('token'))
 keep_alive.keep_alive()
