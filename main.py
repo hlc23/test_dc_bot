@@ -48,7 +48,11 @@ async def on_message(message):
 
     #say
     if message.content.startswith(f"{prefix}say"):
-        await message.reply(message.content.replace(f"{prefix}say ",""))
+        content = message.content.replace(f"{prefix}say","")
+        if content == "":
+            await message.reply(content="???")
+        else:
+            await message.reply(content)
 
     #help
     if message.content == f"{prefix}help":
@@ -125,18 +129,19 @@ async def on_message(message):
     if message.content == f"{prefix}me":
         user = message.author
         everyone_role = guild.get_role(967615452341739621)
-        user_role = ""
         for item in user.roles:
             if item == everyone_role:
                 continue
             user_role += f"    Name: {item.name}, Id: {item.id}\n"
         await message.reply(f"User: {user}\nDisplay name: {user.display_name}\nActivity: {user.activity}\nRoles:\n{user_role}")
 
+# member join
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(967703102436290580)
     await channel.send(f"{member} entered!")
 
+# member leave
 @bot.event
 async def on_member_leave(member):
     channel = bot.get_channel(967703102436290580)
