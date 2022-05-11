@@ -67,7 +67,6 @@ async def on_message(message):
 
     # ping
     if message.content == f"{prefix}ping":
-        channel = bot.get_channel(967703102436290580)
         await message.reply(f"delay {round(bot.latency*1000)} ms")
 
     # add role
