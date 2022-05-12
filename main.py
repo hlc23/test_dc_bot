@@ -104,7 +104,7 @@ async def on_message(message):
             await delete_message(message,reason=f"{message.mentions[0]} 已成功獲得身分組 ")
             return
         except:
-            await delete_message(message,reason="未知錯誤")
+            await delete_message(message,reason="錯誤")
             return
 
     # me
