@@ -56,9 +56,7 @@ async def on_message(message):
         if channel.type != discord.ChannelType.text:
             await message.reply(content=f"The channel must be an text channel and the bot must can send message to.")
             return
-        print(message.content)
-        content = message.content.replace(f"{prefix}say <#{channel.id}>","")
-        print(content)
+        content = message.content.replace(f"{prefix}say <#{message.raw_channel_mentions[0]}>","")
         await channel.send(content)
 
     #help
