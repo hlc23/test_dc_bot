@@ -22,6 +22,19 @@ def change_config(key, value):
         json.dump(config_data,config_file,indent=4,ensure_ascii=False)
 
 
+async def delete_message(message:discord.Message, reason:str = "*訊息遭刪除*", reply:bool = True):
+    if reply:
+        if reason != "":
+            await message.reply(content=reason)
+        await message.delete()
+        return
+    else:
+        if reason != "":
+            await message.channel.send(content=reason)
+        await message.delete()
+        return
+
+
 with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
     config = json.load(config_file)
 
@@ -78,57 +91,21 @@ async def on_message(message):
     if message.content == f"{prefix}ping":
         await message.reply(f"delay {round(bot.latency*1000)} ms")
 
-    # add role
+        # add role
     if message.content.startswith(f"{prefix}add_role"):
-        if message.content == f"{prefix}add_role":
-            await message.reply(content = f"{prefix}add_role [target id] [role id]")
+        content = message.content.split(" ")
+        if content[0] != f"{prefix}add_role":
             return
         if guild.get_role(969962769854128240) not in message.author.roles:
-            await message.reply(content = f"{message.author.mention} You can't use this command!")
-            await message.delete()
+            await delete_message(message,reason=f"{message.author}你沒有權限使用此指令")
             return
-        elif message.channel != guild.get_channel(973520841625174026):
-            await message.reply(content = f"{message.author.mention} You can't use this command here!")
-            await message.delete()
+        try:
+            await message.mentions[0].add_roles(message.role_mentions[0])
+            await delete_message(message,reason=f"{message.mentions[0]} 已成功獲得身分組 ")
             return
-        else:
-            try:
-                text = message.content.split(" ")
-                try:
-                    target_id = text[1]
-                except IndexError:
-                    await message.reply(content= "Missing argument 'target', it should be the id of the target.")
-                    await message.delete()
-                    return
-                try:
-                    role = text[2]
-                except IndexError:
-                    await message.reply(content= "Missing argument 'role', it should be the id of the role you want.")
-                    await message.delete()
-                    return
-            except:
-                await message.reply(content="Unknow Error.")
-                await message.delete()
-                return
-            target = guild.get_member(int(target_id))
-            if target is None:
-                await message.reply(content= "Didn't find the user with the id.")
-                return
-            else:
-                
-                role = guild.get_role(int(role))
-                if role is None:
-                    await message.reply(content= "Didn't find the role with the id.")
-                    return
-                elif role in target.roles:
-                    await message.reply(content= "This member already has this role")
-                    return
-                else:
-                    try:
-                        await target.add_roles(role)
-                        await message.reply(content = "Success.")
-                    except:
-                        await message.reply(content = "Unknow Error.")
+        except:
+            await delete_message(message,reason="未知錯誤")
+            return
 
     # me
     if message.content == f"{prefix}me":
