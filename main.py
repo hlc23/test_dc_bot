@@ -4,6 +4,9 @@ import os
 import keep_alive
 import json
 import _asyncio
+from lib.pixiv import recommended
+from lib.basic import del_file
+import os
 
 # 設定日誌
 logger = logging.getLogger('discord')
@@ -91,7 +94,7 @@ async def on_message(message):
     if message.content == f"{prefix}ping":
         await message.reply(f"delay {round(bot.latency*1000)} ms")
 
-        # add role
+    # add role
     if message.content.startswith(f"{prefix}add_role"):
         content = message.content.split(" ")
         if content[0] != f"{prefix}add_role":
@@ -116,6 +119,32 @@ async def on_message(message):
                 continue
             user_role += f"    Name: {item.name}, Id: {item.id}\n"
         await message.reply(f"User: {user}\nDisplay name: {user.display_name}\nActivity: {user.activity}\nRoles:\n{user_role}")
+
+    #pixiv
+    if message.content.startswith(f"{prefix}pixiv"):
+        if message.content == f"{prefix}pixiv":
+            await message.reply(content=f"{prefix}pixiv [數量]")
+            return
+        text = message.content.split(" ")
+        if len(text) != 2:
+            await delete_message(message,"指令錯誤")
+            return
+        try:
+            n = int(text[1])
+        except:
+            await delete_message(message,"引數錯誤")
+        if n > 25 or n < 1:
+            await delete_message(message,"數量需介於1~25")
+            return
+
+        files = os.listdir("./data/image")
+        for file in files:
+            del_file(path=f"./data/image/{file}")
+        recommended(path="./data/image",n=n)
+        for image in os.listdir("./data/image/"):
+            await message.reply(file=discord.File(f"./data/image/{image}"))
+        return
+ 
 
 # member join
 @bot.event
