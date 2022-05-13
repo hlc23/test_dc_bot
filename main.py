@@ -160,4 +160,7 @@ async def on_member_leave(member):
     await channel.send(f"{member} leaved!")
 
 keep_alive.keep_alive()
-bot.run(os.getenv('token'))
+try:
+    bot.run(os.getenv('token'))
+except:
+    os.system("kill 1")
