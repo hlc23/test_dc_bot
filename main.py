@@ -134,6 +134,7 @@ async def on_message(message):
             n = int(text[1])
         except:
             await delete_message(message,"引數錯誤")
+            return
         if n > 25 or n < 1:
             await delete_message(message,"數量需介於1~25")
             return
