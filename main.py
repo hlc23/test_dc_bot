@@ -65,15 +65,16 @@ async def on_message(message):
     #say
     if message.content.startswith(f"{prefix}say"):
         if guild.get_role(969962769854128240) not in message.author.roles:
-            await message.reply(content=f"{message.author.mention} You can't use this command!")
-            await message.delete()
+            await delete_message(message,reason=f"{message.author.mention} You can't use this command!")
             return
         channel = message.channel_mentions[0]
         if channel.type != discord.ChannelType.text:
-            await message.reply(content=f"The channel must be an text channel and the bot must can send message to.")
+            await delete_message(message,reason=f"The channel must be an text channel and the bot must can send message to.")
             return
         content = message.content.replace(f"{prefix}say <#{message.raw_channel_mentions[0]}>","")
+        await message.delete()
         await channel.send(content)
+        
 
     #help
     if message.content == f"{prefix}help":
