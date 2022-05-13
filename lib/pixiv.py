@@ -3,7 +3,7 @@ from pixivpy3 import *
 REFRESH_TOKEN = "Dv72iY_Mv2vqfcAhSB98x9K_0W85PYOy7h3t9PLe_Aw"
 
 def recommended(path:str="./", n:int=0):
-    if n>25:
+    if n>20:
         return
     api = AppPixivAPI()
     api.auth(refresh_token=REFRESH_TOKEN)
