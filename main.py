@@ -134,8 +134,9 @@ async def on_message(message):
             n = int(text[1])
         except:
             await delete_message(message,"引數錯誤")
-        if n > 20 or n < 1:
-            await delete_message(message,"數量需介於1~20")
+            return
+        if n > 25 or n < 1:
+            await delete_message(message,"數量需介於1~25")
             return
 
         files = os.listdir("./data/image")
@@ -160,4 +161,7 @@ async def on_member_leave(member):
     await channel.send(f"{member} leaved!")
 
 keep_alive.keep_alive()
-bot.run(os.getenv('token'))
+try:
+    bot.run(os.getenv('token'))
+except:
+    os.system("kill 1")
