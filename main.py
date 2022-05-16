@@ -57,8 +57,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     
-    if message.author == bot.user:
-        return
+   # if message.author == bot.user:
+       # return
 
     guild = bot.get_guild(967615452341739621)
 
@@ -115,6 +115,7 @@ async def on_message(message):
     if message.content == f"{prefix}me":
         user = message.author
         everyone_role = guild.get_role(967615452341739621)
+        user_role=""
         for item in user.roles:
             if item == everyone_role:
                 continue
@@ -144,10 +145,22 @@ async def on_message(message):
             del_file(path=f"./data/image/{file}")
         recommended(path="./data/image",n=n)
         for image in os.listdir("./data/image/"):
-            await message.reply(file=discord.File(f"./data/image/{image}"))
+            await message.channel.send(file=discord.File(f"./data/image/{image}"))
+        await delete_message(message, reason="")
         return
  
 
+
+
+
+
+
+
+
+
+
+
+      
 # member join
 @bot.event
 async def on_member_join(member):
