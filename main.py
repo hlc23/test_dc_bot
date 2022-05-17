@@ -15,32 +15,36 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-# change config
-def change_config(key, value):
-    print(f"change config: set {key} to {value}")
-    with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
-        config_data = json.load(config_file)
-    config_data[key] = value
-    with open("./data/config.json",mode="w",encoding="utf-8") as config_file:
-        json.dump(config_data,config_file,indent=4,ensure_ascii=False)
+# change data
+def change_data(file_name, key, value):
+    with open(f"./data/{file_name}.json",mode="r",encoding="utf-8") as file:
+        data = json.load(file)
+    data[key] = value
+    with open(f"./data/{file_name}.json",mode="w",encoding="utf-8") as file:
+        json.dump(data,file,indent=4,ensure_ascii=False)
 
 
-async def delete_message(message:discord.Message, reason:str = "*訊息遭刪除*", reply:bool = True):
+
+async def delete_message(message:discord.Message, reason:str = "*訊息遭刪除*", reply:bool = True, delay:float = 0):
     if reply:
         if reason != "":
             await message.reply(content=reason)
-        await message.delete()
+        await message.delete(delay=delay)
         return
     else:
         if reason != "":
             await message.channel.send(content=reason)
-        await message.delete()
+        await message.delete(delay=delay)
         return
 
 
-with open("./data/config.json",mode="r",encoding="utf-8") as config_file:
-    config = json.load(config_file)
+def load_data(file:str):
+    with open(f"./data/{file}.json",mode="r",encoding="utf-8") as file:
+        data = json.load(file)
+    return data
 
+
+config = load_data("config")
 prefix = config["prefix"]
 
 
@@ -170,11 +174,52 @@ async def on_message(message):
             await message.channel.send(file=discord.File(f"./data/image/{image}"))
         await delete_message(message, reason="")
         return
- 
+
+    # money
+    if message.content == f"{prefix}money":
+        money_data = load_data("money")
+        try:
+            money = money_data[str(message.author.id)]
+        except KeyError:
+            money = 0
+            change_data("money", str(message.author.id), 0)
+            
+        send_message = await message.reply(content=money)
+        await delete_message(message, "", delay=10)
+        await delete_message(send_message, "", delay=10)
 
 
+      # givemoney
+    if message.content.startswith(f"{prefix}sym"):
+        if guild.get_role(969962769854128240) not in message.author.roles:
+            await delete_message(message,reason=f"{message.author}你沒有權限使用此指令")
+            return
+        if message.content == f"{prefix}sym":
+            await delete_message(message,"指令錯誤")
+            return
+        text = message.content.split(" ")
+        try:
+            n = int(text[2])
+        except:
+            await delete_message(message,"指令錯誤")
+            return
+
+      
+        money_data = load_data("money")
+        try:
+            money = money_data[str(message.mentions[0].id)] + n
+            change_data("money", str(message.mentions[0].id), money)
+        except KeyError:
+            money = n
+            change_data("money", str(message.mentions[0].id), money)
+        send_message = await message.channel.send(f"{message.mentions[0].mention} get {money}")
+        await delete_message(message, "")
+        await delete_message(send_message, "", delay=10)
+            
 
 
+      
+        
 
 
 
