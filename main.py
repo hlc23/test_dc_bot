@@ -4,7 +4,7 @@ import os
 import keep_alive
 import json
 import _asyncio
-from lib.pixiv import recommended
+from lib.pixiv import *
 from lib.basic import del_file
 import os
 
@@ -150,8 +150,27 @@ async def on_message(message):
         return
  
 
+    #search 
+    if message.content.startswith(f"{prefix}search"):
+        if message.content == f"{prefix}search":
+            await message.reply(content=f"{prefix}search [tag]")
+            return
+        if message.content == f"{prefix}search [tag]":
+            return
+        text = message.content.split(" ")
+        if len(text) != 2:
+            await delete_message(message,"指令錯誤")
+            return
 
-
+        files = os.listdir("./data/image")
+        for file in files:
+            del_file(path=f"./data/image/{file}")
+        search(key=text[1],n=5)
+        for image in os.listdir("./data/image/"):
+            await message.channel.send(file=discord.File(f"./data/image/{image}"))
+        await delete_message(message, reason="")
+        return
+ 
 
 
 
