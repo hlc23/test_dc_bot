@@ -212,7 +212,7 @@ async def on_message(message):
         except KeyError:
             money = n
             change_data("money", str(message.mentions[0].id), money)
-        send_message = await message.channel.send(f"{message.mentions[0].mention} get {money}")
+        send_message = await message.channel.send(f"{message.mentions[0].mention} get {n}")
         await delete_message(message, "")
         await delete_message(send_message, "", delay=10)
             
