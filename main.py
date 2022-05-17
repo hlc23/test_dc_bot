@@ -136,8 +136,8 @@ async def on_message(message):
         except:
             await delete_message(message,"引數錯誤")
             return
-        if n > 25 or n < 1:
-            await delete_message(message,"數量需介於1~25")
+        if n > 20 or n < 1:
+            await delete_message(message,"數量需介於1~20")
             return
 
         files = os.listdir("./data/image")
