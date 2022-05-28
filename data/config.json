@@ -1,3 +1,10 @@
 {
-    "prefix": "!"
+    "cogs":[
+        "command.basic",
+        "event.logger"
+    ],
+    "prefix": "?",
+    "log_channel":977095524492640296,
+    "admin_role":969962769854128240,
+    "ban_word":["test"]
 }
