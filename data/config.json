@@ -1,7 +1,8 @@
 {
     "cogs":[
         "command.basic",
-        "event.logger"
+        "event.logger",
+        "command.admin"
     ],
     "prefix": "?",
     "HLCT_guild":967615452341739621,
