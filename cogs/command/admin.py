@@ -13,8 +13,7 @@ class Admin(Cog_basic):
             return
         await ctx.message.delete()
         await channel.send(msg)
-
-
+    
 
 def setup(bot: commands.Bot):
     bot.add_cog(Admin(bot))

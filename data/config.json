@@ -4,7 +4,8 @@
         "event.msg_logger",
         "command.admin",
         "event.member_logger",
-        "event.mention"
+        "event.mention",
+        "command.pixiv"
     ],
     "prefix": "?",
     "HLCT_guild":967615452341739621,

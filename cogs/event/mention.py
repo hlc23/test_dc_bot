@@ -15,7 +15,6 @@ class Mention(Cog_basic):
             for admin in self.config["admins"]:
                 admin = self.bot.get_user(admin)
                 if admin in msg.mentions:
-                    
                     embed=discord.Embed(title=msg.channel, url=msg.jump_url, color=0x00ff00)
                     embed.set_thumbnail(url=msg.author.avatar_url)
                     embed.set_author(name=msg.author.name)
