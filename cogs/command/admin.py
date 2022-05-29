@@ -7,7 +7,7 @@ class Admin(Cog_basic):
 
     @commands.Command
     @commands.check(is_admin)
-    async def say(self, ctx:commands.Context, channel:discord.TextChannel, msg):
+    async def say(self, ctx:commands.Context, channel:discord.TextChannel, *, msg):
         await self.delete_message(ctx, reason=None)
         await channel.send(msg)
     
