@@ -25,6 +25,10 @@ class Member_logger(Cog_basic):
             embed.add_field(name="Type", value="Leave", inline=True)
             embed.add_field(name="Top role", value=member.top_role, inline=False)
             await log_channel.send(embed=embed)
+            border_channel = self.bot.get_channel(self.config["border_channel"])
+            embed=discord.Embed(title="成員離開", description=member.mention)
+            embed.set_thumbnail(url=member.avatar_url)
+            await border_channel.send(embed=embed)
 
 
 def setup(bot: commands.Bot):
