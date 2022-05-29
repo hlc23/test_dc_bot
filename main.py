@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 import json
 from dotenv import load_dotenv
@@ -11,6 +12,7 @@ def load_config():
 
 load_dotenv()
 load_config()
+
 bot = commands.Bot(command_prefix=config["prefix"])
 
 
@@ -21,7 +23,12 @@ async def on_ready():
     print("="*15)
 
 @bot.command()
-async def reload(ctx):
+async def reload(ctx:commands.Context):
+    guild = bot.get_guild(config["HLCT_guild"])
+    guild :discord.Guild
+    admin = guild.get_role(config["admin_role"])
+    if admin not in ctx.author.roles:
+        return
     load_config()
     for cog in config["cogs"]:
         try:
