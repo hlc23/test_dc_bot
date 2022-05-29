@@ -43,7 +43,7 @@ async def reload(ctx:commands.Context):
 for cog in config["cogs"]:
     bot.load_extension(f"cogs.{cog}")
 
-keep_alive()
+# keep_alive()
 try:
     bot.run(os.getenv("token"))
 except:
