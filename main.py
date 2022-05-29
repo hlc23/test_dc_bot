@@ -3,6 +3,7 @@ from discord.ext import commands
 import json
 from dotenv import load_dotenv
 import os
+from keep_alive import keep_alive
 
 def load_config():
     global config
@@ -41,6 +42,8 @@ async def reload(ctx:commands.Context):
 
 for cog in config["cogs"]:
     bot.load_extension(f"cogs.{cog}")
+
+keep_alive()
 try:
     bot.run(os.getenv("token"))
 except:
