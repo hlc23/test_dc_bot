@@ -10,3 +10,9 @@ class Cog_basic(commands.Cog):
         self.guild = self.bot.get_guild(self.config["HLCT_guild"])
         self.guild: discord.Guild
 
+
+    async def delete_message(self, ctx:commands.Context, reason:str = "***這裡曾有一則訊息，但現在不在了***"):
+        await ctx.message.delete()
+        if reason is None or reason == "":
+            return
+        await ctx.send(reason)

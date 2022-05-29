@@ -10,12 +10,10 @@ class Pixiv(Cog_basic):
     @commands.Command
     async def pixiv(self, ctx:commands.Context, num:int):
         if ctx.channel != self.bot.get_channel(974633423178190909):
-            await ctx.send("***這裡曾有一則訊息，但現在不在了***")
-            await ctx.message.delete()
+            await self.delete_message(ctx)
             return
         if num < 1 or num >20:
-            await ctx.send("***這裡曾有一則訊息，但現在不在了***")
-            await ctx.message.delete()
+            await self.delete_message(ctx)
             return
         files = os.listdir("./data/image")
         for file in files:

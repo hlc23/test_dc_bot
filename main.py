@@ -16,7 +16,6 @@ load_config()
 bot = commands.Bot(command_prefix=config["prefix"], intents = discord.Intents.all())
 
 
-
 @bot.event
 async def on_ready():
     print("="*15)
