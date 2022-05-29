@@ -13,7 +13,8 @@ def load_config():
 load_dotenv()
 load_config()
 
-bot = commands.Bot(command_prefix=config["prefix"])
+bot = commands.Bot(command_prefix=config["prefix"], intents = discord.Intents.all())
+
 
 
 @bot.event

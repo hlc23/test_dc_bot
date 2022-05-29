@@ -4,12 +4,13 @@ import discord
 import discord
 import datetime
 
-class Logger(Cog_basic):
+class Msg_logger(Cog_basic):
 
     @commands.Cog.listener()
-    async def on_message(self, msg:commands.Context):
+    async def on_message(self, msg:discord.Message):
         log_channel = self.bot.get_channel(self.config["log_channel"])
-        if msg.channel != log_channel:
+        mention_channel = self.bot.get_channel(self.config["mention_channel"])
+        if msg.channel != (log_channel or mention_channel):
             embed=discord.Embed(title=msg.channel, url=msg.jump_url, color=0x00ff00)
             embed.set_thumbnail(url=msg.author.avatar_url)
             embed.set_author(name=msg.author.name)
@@ -74,4 +75,4 @@ class Logger(Cog_basic):
 
 
 def setup(bot: commands.Bot):
-    bot.add_cog(Logger(bot))
+    bot.add_cog(Msg_logger(bot))
