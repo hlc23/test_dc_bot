@@ -21,8 +21,12 @@ class Admin(Cog_basic):
     @commands.check(is_admin)
     async def join(self, ctx:commands.Context, member:discord.Member):
         normal_role = self.guild.get_role(969962597061373994)
+        border_channel = self.bot.get_channel(self.config["border_channel"])
         await self.delete_message(ctx, reason=None)
         await member.add_roles(normal_role)
+        embed=discord.Embed(title="成員加入", description=member.mention)
+        embed.set_thumbnail(url=member.avatar_url)
+        await border_channel.send(embed=embed)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Admin(bot))
