@@ -5,13 +5,16 @@
         "command.admin",
         "event.member_logger",
         "event.mention",
-        "command.pixiv"
+        "command.pixiv",
+		"event.dynamic"
     ],
     "prefix": "!",
     "HLCT_guild":967615452341739621,
     "log_channel":977095524492640296,
     "border_channel":967703102436290580,
     "mention_channel":977095895961186304,
+	"dynamic_door":981136858157301790,
+    "dynamic_type":967615452341739623,
     "admin_role":969962769854128240,
     "normal_role":969962597061373994,
     "admins":[970189566487171122]
