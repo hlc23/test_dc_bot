@@ -38,6 +38,14 @@ async def reload(ctx:commands.Context):
             bot.load_extension(f"cogs.{cog}")
     await ctx.send("reload complete")
 
+@bot.event
+async def on_error(event, *args, **kwargs):
+    load_config()
+    for cog in config["cogs"]:
+        try:
+            bot.reload_extension(f"cogs.{cog}")
+        except:
+            bot.load_extension(f"cogs.{cog}")
 
 
 for cog in config["cogs"]:
