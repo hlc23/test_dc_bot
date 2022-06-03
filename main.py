@@ -46,6 +46,8 @@ async def on_error(event, *args, **kwargs):
             bot.reload_extension(f"cogs.{cog}")
         except:
             bot.load_extension(f"cogs.{cog}")
+    rc = bot.get_channel(981463832906063912)
+    rc.send("reloaded")
 
 
 for cog in config["cogs"]:

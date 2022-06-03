@@ -1,14 +1,8 @@
 {
     "cogs":[
-        "command.basic",
-        "event.msg_logger",
-        "command.admin",
-        "event.member_logger",
-        "event.mention",
-        "command.pixiv",
-		"event.dynamic"
+        "command.basic"
     ],
-    "prefix": "!",
+    "prefix": "?",
     "HLCT_guild":967615452341739621,
     "log_channel":977095524492640296,
     "border_channel":967703102436290580,

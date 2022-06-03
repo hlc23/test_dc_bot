@@ -26,7 +26,11 @@ class Admin(Cog_basic):
         await member.add_roles(normal_role)
         embed=discord.Embed(title="成員加入", description=member.mention)
         embed.set_thumbnail(url=member.avatar_url)
+        embed.set_footer(text=member.name)
         await border_channel.send(embed=embed)
+
+    
+            
 
 def setup(bot: commands.Bot):
     bot.add_cog(Admin(bot))
