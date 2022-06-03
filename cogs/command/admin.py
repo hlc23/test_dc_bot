@@ -29,8 +29,21 @@ class Admin(Cog_basic):
         embed.set_footer(text=member.name)
         await border_channel.send(embed=embed)
 
-    
-            
+    @commands.Command
+    @commands.check(is_admin)
+    async def poll(self, ctx:commands.Context, question:str, *, option:str):
+        embed = discord.Embed(title=question)
+        text = ""
+        alphabet = "🇦🇧🇨🇩🇪🇫🇬🇭🇮🇯🇰🇱🇲🇳🇴🇵🇶🇷🇸🇹"
+        options = option.split(" ")
+        for i in range(len(options)):
+            text += f"{alphabet[i]}{options[i]}\n"
+        embed.description = text
+        await ctx.message.delete()
+        msg = await ctx.send(content=f"投票發起人:{ctx.author.mention}",embed=embed)
+        for t in range(len(options)):
+            await msg.add_reaction(alphabet[t])
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(Admin(bot))
