@@ -35,7 +35,10 @@ async def reload(ctx:commands.Context):
         try:
             bot.reload_extension(f"cogs.{cog}")
         except:
-            bot.load_extension(f"cogs.{cog}")
+            try:
+                bot.unload_extension(f"cogs.{cog}")
+            except:
+                bot.load_extension(f"cogs.{cog}")
     await ctx.send("reload complete")
 
 @bot.event
