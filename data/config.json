@@ -6,7 +6,8 @@
         "event.member_logger",
         "event.mention",
         "command.pixiv",
-		"event.dynamic"
+		"event.dynamic",
+        "command.gif"
     ],
     "prefix": "!",
     "HLCT_guild":967615452341739621,
