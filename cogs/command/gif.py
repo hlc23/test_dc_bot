@@ -6,7 +6,7 @@ from discord import Embed
 class Gif(Cog_basic):
 
     @commands.Command
-    async def tenor(self, ctx:commands.Context, keyword:str):
+    async def tenor(self, ctx:commands.Context, *, keyword:str):
         result = gifsearch(keyword)
         if result is None:
             await ctx.send("查無結果")
