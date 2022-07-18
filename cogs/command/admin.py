@@ -7,9 +7,11 @@ class Admin(Cog_basic):
 
     @discord.command(name="join", description="Let someone in.")
     async def join(self, ctx:discord.ApplicationContext, member:discord.Member):
+        print(ctx.author.guild_permissions.administrator)
         if ctx.author.guild_permissions.administrator is False:
             embed = discord.Embed(title="您無使用此指令的權限", colour=discord.Colour.red())
             await ctx.respond(embed=embed, ephemeral=True)
+            return
         self.guild = self.bot.get_guild(self.config["HLCT_guild"])
         normal_role = self.guild.get_role(969962597061373994)
         border_channel = self.bot.get_channel(self.config["border_channel"])
