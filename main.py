@@ -39,9 +39,9 @@ async def reload(ctx:discord.ApplicationContext):
             except:
                 bot.load_extension(f"cogs.{cog}")
     except:
-        await ctx.respond("Error")
+        await ctx.respond("Error", ephemeral=True)
     else:
-        await ctx.respond("Reload complete")
+        await ctx.respond("Reload complete", ephemeral=True)
     return
 
 for cog in cogs:

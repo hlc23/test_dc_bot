@@ -9,8 +9,9 @@ def recommended(path:str="./", n:int=0):
     api.auth(refresh_token=REFRESH_TOKEN)
 
     json_result = api.illust_recommended()
-    for t in range(n):
-        api.download(json_result.illusts[t].image_urls.medium,path=path,fname=f"image{t+1}.png")
+    return json_result
+    # for t in range(n):
+    #     api.download(json_result.illusts[t].image_urls.medium,path=path,fname=f"image{t+1}.png")
 
 
 def search(key:str, n:int):
