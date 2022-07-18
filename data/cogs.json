@@ -2,6 +2,7 @@
     "cogs":[
         "command.basic",
         "command.admin",
-        "command.pixiv"
+        "command.pixiv",
+        "event.dvc"
     ]
 }
