@@ -2,7 +2,7 @@ from lib.pixiv import *
 from core.cog_class import Cog_basic
 from discord.ext import commands
 import discord
-from lib.basic import *
+import os
 
 class Pixiv(Cog_basic):
     
@@ -14,7 +14,7 @@ class Pixiv(Cog_basic):
 
         await ctx.respond("您的指令正在處理中", ephemeral=True)
 
-        PIXIV_TOKEN = "Dv72iY_Mv2vqfcAhSB98x9K_0W85PYOy7h3t9PLe_Aw"
+        PIXIV_TOKEN = os.getenv("PIXIV_API_KEY")
         api = AppPixivAPI()
         api.auth(refresh_token=PIXIV_TOKEN)
         json_result = api.illust_recommended()
