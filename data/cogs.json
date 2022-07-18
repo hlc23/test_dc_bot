@@ -1,0 +1,10 @@
+{
+    "cogs":[
+        "command.basic",
+        "command.admin",
+        "command.pixiv",
+        "event.dvc",
+        "event.msg_logger",
+        "event.member_logger"
+    ]
+}

@@ -13,3 +13,4 @@ data/image
 temp.py
 cogs/command/music.py
 ffmpeg.exe
+.venv
