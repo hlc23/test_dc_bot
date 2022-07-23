@@ -5,7 +5,7 @@ from discord.ext import commands
 class Admin(Cog_basic):
 
 
-    @discord.command(name="join", description="Let someone in.")
+    @discord.slash_command(name="join", description="ONLY ADMIN:Let someone in.")
     async def join(self, ctx:discord.ApplicationContext, member:discord.Member):
         print(ctx.author.guild_permissions.administrator)
         if ctx.author.guild_permissions.administrator is False:
@@ -21,6 +21,10 @@ class Admin(Cog_basic):
         embed.set_footer(text=member.name)
         await border_channel.send(embed=embed)
         await ctx.respond(f"{member.mention} 已成功加入", ephemeral=True)
+
+    @discord.slash_command(name="status", description="ONLY ADMIN:bot status.")
+    async def status():
+        pass
 
 def setup(bot: discord.Bot):
     bot.add_cog(Admin(bot))
