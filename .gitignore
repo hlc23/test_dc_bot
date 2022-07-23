@@ -11,6 +11,6 @@ test3.py
 data/image
 .env
 temp.py
-cogs/command/music.py
+
 ffmpeg.exe
 .venv
