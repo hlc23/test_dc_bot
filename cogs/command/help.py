@@ -45,7 +45,7 @@ class Help(Cog_basic):
             embed = discord.Embed(
                 title="me",
                 colour=discord.Colour.green(),
-                description="顯示使用者的資訊(僅自使用者可見)\n\n`/me")
+                description="顯示使用者的資訊(僅自己可見)\n\n`/me`")
             embed.set_footer(text=ctx.author.display_name, icon_url=ctx.author.display_avatar.url)
             await ctx.respond(embed=embed)
         elif cmd == "show":

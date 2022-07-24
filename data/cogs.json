@@ -6,7 +6,7 @@
         "event.dvc",
         "event.msg_logger",
         "event.member_logger",
-        "command.help"
+        "command.help",
         "command.translation"
     ]
 }
