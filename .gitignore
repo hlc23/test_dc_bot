@@ -16,3 +16,5 @@ ffmpeg.exe
 .venv
 .vscode
 discord
+test.json
+data/pixiv/
