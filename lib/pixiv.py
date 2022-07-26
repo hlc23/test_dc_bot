@@ -1,10 +1,9 @@
+# from json import dump
 from pixivpy3 import *
 
 REFRESH_TOKEN = "Dv72iY_Mv2vqfcAhSB98x9K_0W85PYOy7h3t9PLe_Aw"
 
-def recommended(path:str="./", n:int=0):
-    if n>20:
-        return
+def recommended():
     api = AppPixivAPI()
     api.auth(refresh_token=REFRESH_TOKEN)
 
@@ -27,5 +26,5 @@ def search(key:str, n:int):
         api.download(illust.image_urls.medium, path="./data/image/")
         n -= 1
 
-
-
+# with open("test.json", mode="w", encoding="utf-8") as j:
+#     dump(recommended(), j, indent=4, ensure_ascii=False)

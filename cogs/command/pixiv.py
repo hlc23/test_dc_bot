@@ -20,9 +20,10 @@ class Pixiv(Cog_basic):
         json_result = api.illust_recommended()
         for illust in json_result.illusts:
             api.download(illust.image_urls.medium, path="data/pixiv/")
-            embed = discord.Embed(title=illust.title, colour=discord.Colour.from_rgb(r=0, g=155, b=255), url=f"https://www.pixiv.net/artworks/{illust.id}")
+            embed = discord.Embed(title=illust.title, colour=discord.Colour.from_rgb(r=0, g=155, b=255), description=f"https://www.pixiv.net/artworks/{illust.id}")
+            embed.set_footer(text=illust.user.name)
             file = os.listdir("./data/pixiv/")
-            await self.bot.get_channel(974633423178190909).send(embed=embed, file=discord.File(f'./data/pixiv/{file[0]}'))
+            await self.bot.get_channel(974633423178190909).send(embed=embed, file=discord.File(f'./data/pixiv/{file[0]}') )
             os.remove(f'./data/pixiv/{file[0]}')
 
         return
