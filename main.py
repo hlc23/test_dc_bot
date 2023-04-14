@@ -23,7 +23,7 @@ bot = discord.Bot(debug_guilds=[967615452341739621], intents=discord.Intents.all
 @bot.event
 async def on_ready():
     print("="*15)
-    print(f"{bot.user} is ready and online!")
+    print(f"{bot.user} v1.1 is ready and online!")
     print("="*15)
     return
 
