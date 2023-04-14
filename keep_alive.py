@@ -5,6 +5,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
+    print("hello world")
     return ".w."
 
 def run():
