@@ -7,6 +7,7 @@
         "event.msg_logger",
         "event.member_logger",
         "command.help",
-        "command.translation"
+        "command.translation",
+        "event.respond"
     ]
 }
