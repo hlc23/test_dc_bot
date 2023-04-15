@@ -18,7 +18,7 @@ load_dotenv()
 load_config()
 get_cogs()
 
-bot = discord.Bot(debug_guilds=[967615452341739621], intents=discord.Intents.all())
+bot = commands.Bot(debug_guilds=[967615452341739621], intents=discord.Intents.all(), command_prefix="!")
 
 @bot.event
 async def on_ready():
