@@ -8,6 +8,7 @@
         "event.member_logger",
         "command.help",
         "command.translation",
-        "event.respond"
+        "event.respond",
+        "command.prefix"
     ]
 }
