@@ -3,7 +3,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import json
 import os
-from keep_alive import keep_alive
+# from keep_alive import keep_alive
 
 def load_config():
     with open("./data/config.json", mode="r", encoding="utf-8") as config_file:
@@ -23,7 +23,7 @@ bot = commands.Bot(debug_guilds=[967615452341739621], intents=discord.Intents.al
 @bot.event
 async def on_ready():
     print("="*15)
-    print(f"{bot.user} v1.1 is ready and online!")
+    print(f"{bot.user} v1.2 is ready and online!")
     print("="*15)
     return
 
@@ -50,7 +50,7 @@ for cog in cogs:
 # print(bot.cogs.items())
 
 
-keep_alive()
+# keep_alive()
 # bot.run(os.getenv("TOKEN"))
 try:
     bot.run(os.getenv('TOKEN'))
