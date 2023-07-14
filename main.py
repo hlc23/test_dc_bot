@@ -5,6 +5,8 @@ import json
 import os
 # from keep_alive import keep_alive
 
+__VERSION__ = "1.3"
+
 def load_config():
     with open("./data/config.json", mode="r", encoding="utf-8") as config_file:
         global config
@@ -23,7 +25,7 @@ bot = commands.Bot(debug_guilds=[967615452341739621], intents=discord.Intents.al
 @bot.event
 async def on_ready():
     print("="*15)
-    print(f"{bot.user} v1.2 is ready and online!")
+    print(f"{bot.user} v{__VERSION__} is ready and online!")
     print("="*15)
     return
 
