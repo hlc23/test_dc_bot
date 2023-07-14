@@ -9,6 +9,7 @@
         "command.help",
         "command.translation",
         "event.respond",
-        "command.prefix"
+        "command.prefix",
+        "command.rich"
     ]
 }
