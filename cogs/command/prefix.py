@@ -5,7 +5,7 @@ from discord.ext import commands
 from random import choice, randint
 
 class Prefix(Cog_basic):
-    
+
     @commands.command(name="choose", description="Random choose one of the options")
     async def choose(self, ctx: commands.Context, *args):
         if len(args) == 0:
