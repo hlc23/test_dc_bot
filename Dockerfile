@@ -1,8 +1,15 @@
-FROM ubuntu
-RUN apt-get update
-RUN apt-get install -y python3
-RUN apt-get install -y python3-pip
-RUN pip install -r requirements.txt
-COPY . /app
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim
+
+# Set the working directory to /app
 WORKDIR /app
-CMD python3 main.py
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+# Run app.py when the container launches
+CMD ["python", "main.py"]
