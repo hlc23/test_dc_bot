@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import json
 import os
 # from keep_alive import keep_alive
@@ -16,7 +16,7 @@ def get_cogs():
         global cogs
         cogs = json.load(cogs_file)["cogs"]
 
-load_dotenv()
+# load_dotenv()
 load_config()
 get_cogs()
 
