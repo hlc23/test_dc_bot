@@ -5,7 +5,7 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Copy the used directory and contents into the container at /app
-COPY ./cogs /app/
+COPY ./cogs /app/cogs
 COPY ./core /app/core
 COPY ./data /app/data
 COPY lib /app/lib
