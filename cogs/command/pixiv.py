@@ -18,6 +18,8 @@ class Pixiv(Cog_basic):
         api = AppPixivAPI()
         api.auth(refresh_token=PIXIV_TOKEN)
         json_result = api.illust_recommended()
+        if not os.path.exists("data/pixiv/"):
+            os.makedirs("data/pixiv/")
         for illust in json_result.illusts:
             api.download(illust.image_urls.medium, path="data/pixiv/")
             embed = discord.Embed(title=illust.title, colour=discord.Colour.from_rgb(r=0, g=155, b=255), description=f"https://www.pixiv.net/artworks/{illust.id}")
@@ -27,15 +29,6 @@ class Pixiv(Cog_basic):
             os.remove(f'./data/pixiv/{file[0]}')
 
         return
-
-        # files = os.listdir("./data/image")
-        # for file in files:
-        #     del_file(path=f"./data/image/{file}")
-        # recommended(path="./data/image",n=num)
-        # for image in os.listdir("./data/image/"):
-        #     await ctx.channel.send(file=discord.File(f"./data/image/{image}"))
-        # await ctx.message.delete()
-        # return
 
 def setup(bot: commands.Bot):
     bot.add_cog(Pixiv(bot))
