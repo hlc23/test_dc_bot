@@ -5,7 +5,7 @@ import json
 import os
 # from keep_alive import keep_alive
 
-__VERSION__ = "1.3"
+__VERSION__ = "1.4"
 
 def load_config():
     with open("./data/config.json", mode="r", encoding="utf-8") as config_file:
