@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the used directory and contents into the container at /app
 COPY ./cogs /app/
-COPY core /app/core
+COPY ./core /app/core
 COPY ./data /app/data
 COPY lib /app/lib
 COPY ./main.py /app/
