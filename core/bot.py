@@ -1,7 +1,7 @@
 import json
 from typing import List, Tuple
 from discord.ext.commands import Bot
-from util.file import get_cogs
+from utils.file import get_cogs
 
 class Mybot(Bot):
     def __init__(self, *args, **kwargs):

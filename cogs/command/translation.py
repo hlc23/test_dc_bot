@@ -1,6 +1,6 @@
 from core.cog_class import Cog_basic
 import discord
-from util.translator import translations
+from utils.translator import translations
 
 class Translation(Cog_basic):
 
