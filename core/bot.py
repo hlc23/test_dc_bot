@@ -9,7 +9,6 @@ class Mybot(Bot):
         super().__init__(*args, **kwargs)
         self.config = load_config()
         self.AUTHOR_ID: int = self.config["author_id"]
-        self.AUTHOR: User = self.get_user(self.AUTHOR_ID)
         self.VERSION = self.config["version"]
         self.loaded_cogs = []
         self.load_cogs()
@@ -69,4 +68,4 @@ class Mybot(Bot):
 
     @property
     def owner(self) -> User:
-        return self.AUTHOR
+        return self.get_user(self.AUTHOR_ID)
