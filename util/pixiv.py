@@ -9,8 +9,6 @@ def recommended():
 
     json_result = api.illust_recommended()
     return json_result
-    # for t in range(n):
-    #     api.download(json_result.illusts[t].image_urls.medium,path=path,fname=f"image{t+1}.png")
 
 
 def search(key:str, n:int):
@@ -25,6 +23,3 @@ def search(key:str, n:int):
             break
         api.download(illust.image_urls.medium, path="./data/image/")
         n -= 1
-
-# with open("test.json", mode="w", encoding="utf-8") as j:
-#     dump(recommended(), j, indent=4, ensure_ascii=False)

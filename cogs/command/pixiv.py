@@ -1,4 +1,4 @@
-from lib.pixiv import *
+from util.pixiv import *
 from core.cog_class import Cog_basic
 from discord.ext import commands
 import discord

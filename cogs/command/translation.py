@@ -1,6 +1,6 @@
 from core.cog_class import Cog_basic
 import discord
-from lib.translator import translations
+from util.translator import translations
 
 class Translation(Cog_basic):
 
@@ -16,7 +16,7 @@ class Translation(Cog_basic):
 			discord.OptionChoice(name="Français", value="fr"),
 			discord.OptionChoice(name="Italiano", value="it"),
 			discord.OptionChoice(name="日本語", value="ja"),
-			])
+			]) # type: ignore
 		):
 		data = translations(Lang=language, text=text)
 		embed = discord.Embed(title="翻譯", colour=discord.Colour.green(), description=text)

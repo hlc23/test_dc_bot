@@ -1,7 +1,8 @@
-from core.cog_class import Cog_basic
-from discord.utils import format_dt
 import discord
 import datetime
+from core.cog_class import Cog_basic
+from discord.utils import format_dt
+from discord import Embed
 
 class Basic(Cog_basic):
     
@@ -30,10 +31,10 @@ class Basic(Cog_basic):
         ctx:discord.ApplicationContext,
         member:discord.Option(discord.Member, "查看的對象") # type: ignore
         ):
-        self.member:discord.Member = member
-        embed=discord.Embed(title=self.member.name, description=self.member.mention)
-        joinDate = ctx.author.joined_at.date()
-        joinTime = ctx.author.joined_at.time()
+        member:discord.Member = member
+        embed=discord.Embed(title=member.name, description=member.mention)
+        joinDate = member.joined_at.date()
+        joinTime = member.joined_at.time()
 
         jT = datetime.datetime(joinDate.year, joinDate.month, joinDate.day, joinTime.hour, joinTime.minute, joinTime.second)
 

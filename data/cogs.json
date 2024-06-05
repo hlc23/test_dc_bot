@@ -10,6 +10,6 @@
         "command.translation",
         "event.respond",
         "command.prefix",
-        "command.rich"
+        "command.emoji_text"
     ]
 }

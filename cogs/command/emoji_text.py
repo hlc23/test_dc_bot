@@ -6,7 +6,7 @@ class Rich(Cog_basic):
     @discord.slash_command(name="rich", description="If you consider some msg is rich, then just use this command.")
     async def rich(self,
              ctx: discord.ApplicationContext,
-             msg_id: discord.Option(description="The message id you want to consider as rich", type=str, required=True)
+             msg_id: discord.Option(description="The message id you want to consider as rich", type=str, required=True) # type: ignore
              ):
         try:
             msg = await ctx.channel.fetch_message(msg_id)
