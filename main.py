@@ -5,9 +5,6 @@ import os
 from core.bot import Mybot
 from discord.ext import commands
 
-
-
-
 def main():
     bot = Mybot(debug_guilds=[967615452341739621], intents=discord.Intents.all(), command_prefix="!")
 
@@ -28,6 +25,8 @@ def main():
     @bot.listen()
     async def on_slash_command_error(ctx, error):
         await bot.AUTHOR.send(error)
+
+    bot.run(os.getenv("TOKEN"))
 
 
 if __name__ == "__main__":

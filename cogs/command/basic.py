@@ -39,9 +39,9 @@ class Basic(Cog_basic):
         jT = datetime.datetime(joinDate.year, joinDate.month, joinDate.day, joinTime.hour, joinTime.minute, joinTime.second)
 
         embed.add_field(name="加入時間", value=f"{format_dt(jT, 'f')}\n{format_dt(jT, 'R')}", inline=False)
-        embed.add_field(name="狀態", value=self.member.activity, inline=False)
-        embed.add_field(name="最高身分組", value=self.member.top_role, inline=False)
-        embed.set_thumbnail(url=self.member.display_avatar.url)
+        embed.add_field(name="狀態", value=member.activity, inline=False)
+        embed.add_field(name="最高身分組", value=member.top_role, inline=False)
+        embed.set_thumbnail(url=member.display_avatar.url)
         await ctx.respond(embed=embed)
 
 
