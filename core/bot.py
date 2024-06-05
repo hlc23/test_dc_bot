@@ -1,16 +1,15 @@
 import json
 from typing import List, Tuple
 from discord.ext.commands import Bot
-from utils.file import get_cogs
+from discord import User
+from utils.file import get_cogs, load_config
 
 class Mybot(Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        with open("./data/config.json", mode="r", encoding="utf-8") as config_file:
-            self.config = json.load(config_file)
-
-        self.AUTHOR_ID = self.config["author_id"]
-        self.AUTHOR = self.get_user(self.AUTHOR_ID)
+        self.config = load_config()
+        self.AUTHOR_ID: int = self.config["author_id"]
+        self.AUTHOR: User = self.get_user(self.AUTHOR_ID)
         self.VERSION = self.config["version"]
         self.loaded_cogs = []
         self.load_cogs()
@@ -68,3 +67,6 @@ class Mybot(Bot):
             return False
         return True
 
+    @property
+    def owner(self) -> User:
+        return self.AUTHOR
