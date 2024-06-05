@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ./cogs /app/cogs
 COPY ./core /app/core
 COPY ./data /app/data
-COPY lib /app/lib
+COPY ./utils /app/utils
 COPY ./main.py /app/
 COPY ./requirements.txt /app/
 
