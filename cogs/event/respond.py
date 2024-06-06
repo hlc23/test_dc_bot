@@ -14,10 +14,8 @@ class Respond(Cog_basic):
         if msg.content == "艸":
             with open("./data/fuck_text.yaml", "r", encoding="utf-8") as f:
                 text = choice(safe_load(f))
-            if text == "今天不開心沒關係，反正明天也不會開心":
-                await msg.channel.send("https://cdn.discordapp.com/attachments/967704354977103952/1096647529766080663/FB_IMG_1681531522298.jpg")
-            else:
-                await msg.channel.send(text)
+            
+            await msg.channel.send(text)
             return
 
         if msg.author.guild_permissions.administrator:

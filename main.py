@@ -1,9 +1,9 @@
 import discord
-import json
 import os
 
 from core.bot import Mybot
 from discord.ext import commands
+from discord import Embed
 
 def main():
     bot = Mybot(debug_guilds=[967615452341739621], intents=discord.Intents.all(), command_prefix="!")
@@ -13,6 +13,8 @@ def main():
         print("="*15)
         print(f"{bot.user} v{bot.VERSION} is ready and online!")
         print("="*15)
+        embed = Embed(title="Bot is ready!", description=f"{bot.user} v{bot.VERSION} is ready and online!")
+        await bot.owner.send(embed=embed)
         return
 
     @bot.slash_command(name = "reload", description = "Reload cog")
