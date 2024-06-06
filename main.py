@@ -24,11 +24,10 @@ def main():
 
     @bot.listen()
     async def on_slash_command_error(ctx, error):
-        await bot.AUTHOR.send(error)
+        await bot.owner.send(f"Error: {error}")
 
     bot.run(os.getenv("TOKEN"))
 
 
 if __name__ == "__main__":
     main()
-    
