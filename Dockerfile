@@ -1,23 +1,32 @@
-# Use an official Python runtime as a parent image
-FROM python:3.13-slim
+# ── Builder stage ────────────────────────────────────────────────────────────
+# Install build tools and compile all Python dependencies into /install.
+# This layer (and gcc/build-essential) will NOT be present in the final image.
+FROM python:3.13-slim AS builder
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy the used directory and contents into the container at /app
+COPY ./requirements.txt /app/
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc build-essential \
+    && pip install --no-cache-dir --prefix=/install -r requirements.txt \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── Final stage ───────────────────────────────────────────────────────────────
+# Clean runtime image – no build tools, only the pre-built packages.
+FROM python:3.13-slim
+
+WORKDIR /app
+
+# Copy compiled packages from the builder stage
+COPY --from=builder /install /usr/local
+
+# Copy application source
 COPY ./cogs /app/cogs
 COPY ./core /app/core
 # COPY ./data /app/data # mount data volume instead of copying
 COPY ./utils /app/utils
 COPY ./main.py /app/
-COPY ./requirements.txt /app/
 
-# Install build dependencies required for packages that need C compilation (e.g. aiohttp)
-RUN apt-get update && apt-get install -y --no-install-recommends gcc build-essential && rm -rf /var/lib/apt/lists/*
-
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-# Run app.py when the container launches
+# Run the bot
 CMD ["python", "main.py"]
