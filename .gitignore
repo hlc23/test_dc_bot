@@ -21,3 +21,6 @@ data/pixiv/
 venv
 replit.nix
 run.sh
+prompt.txt
+data/
+data/cogs.json

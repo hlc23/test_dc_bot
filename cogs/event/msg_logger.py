@@ -8,6 +8,10 @@ class Msg_logger(Cog_basic):
 
     @discord.Cog.listener()
     async def on_message_edit(self, before:discord.Message, after:discord.Message):
+        if before.author == self.bot.user:
+            return
+        if before.guild is None: # Ignore DMs
+            return
         log_channel = self.bot.get_channel(self.config["log_channel"])
         if before.channel != log_channel:
             embed=discord.Embed(title=before.channel, url=after.jump_url, color=0x0000ff)

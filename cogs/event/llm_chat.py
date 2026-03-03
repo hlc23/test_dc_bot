@@ -1,25 +1,49 @@
+import logging
+
 import discord
 from discord.ext import commands
 import aiohttp
 import dotenv
 import os
 import asyncio
+from urllib.parse import urlparse
 
 dotenv.load_dotenv()
 
-with open("./data/prompt.txt", "r", encoding="utf-8") as f:
-    PROMPT_TEMPLATE = f.read()
+logger = logging.getLogger(__name__)
+
+
+def normalize_ollama_url(raw_url: str) -> str:
+    url = (raw_url or "").strip().strip('"').strip("'")
+    if not url:
+        return "http://localhost:11434/api/generate"
+    parsed = urlparse(url)
+    path = (parsed.path or "").rstrip("/")
+    if path in ("", "/"):
+        return url.rstrip("/") + "/api/generate"
+    if path.endswith("/api/generate") or path.endswith("/api/chat"):
+        return url
+    return url
 
 class LLMChat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
+        try:
+            with open("./data/prompt.txt", "r", encoding="utf-8") as f:
+                self.PROMPT_TEMPLATE = f.read()
+        except FileNotFoundError:
+            logger.warning("./data/prompt.txt not found, using empty template")
+            self.PROMPT_TEMPLATE = ""
+        
+        self.ollama_url = normalize_ollama_url(os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate"))
         self.model = os.getenv("OLLAMA_MODEL", "llama2")
         self.ollama_username = os.getenv("OLLAMA_USERNAME")
         self.ollama_password = os.getenv("OLLAMA_PASSWORD")
-        self.request_timeout = int(os.getenv("OLLAMA_TIMEOUT", "30"))
+        self.request_timeout = int(os.getenv("OLLAMA_TIMEOUT", "180"))
         self.thinking_emoji = "🤔"
         self.timeout_emoji = ":x:"
+        
+        logger.info(f"LLMChat initialized - OLLAMA_URL: {self.ollama_url}, Model: {self.model}")
     
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -32,7 +56,7 @@ class LLMChat(commands.Cog):
         
         if self.bot.user.mentioned_in(message):
             thinking_reaction_added = False
-
+            logger.info("Received message from %s: %s", message.author, message.content)
             try:
                 await message.add_reaction(self.thinking_emoji)
                 thinking_reaction_added = True
@@ -63,13 +87,13 @@ class LLMChat(commands.Cog):
                     except discord.HTTPException:
                         pass
                     await message.reply("Request timed out, please try again.")
-                except Exception as e:
+                except Exception:
                     if thinking_reaction_added:
                         try:
                             await message.remove_reaction(self.thinking_emoji, self.bot.user)
                         except discord.HTTPException:
                             pass
-                    await message.reply(f"Error: {str(e)}")
+                    await message.reply(f"-# {self.bot.user.mention} 好像睡著了...")
     
     async def generate_response(self, prompt: str) -> str:
         if not prompt.strip():
@@ -77,7 +101,7 @@ class LLMChat(commands.Cog):
             
         payload = {
             "model": self.model,
-            "prompt": f"{PROMPT_TEMPLATE}\n\n```{prompt}```",
+            "prompt": f"{self.PROMPT_TEMPLATE}\n\n```{prompt}```",
             "stream": False
         }
         auth = None
@@ -86,18 +110,29 @@ class LLMChat(commands.Cog):
         
         async with aiohttp.ClientSession() as session:
             timeout = aiohttp.ClientTimeout(total=self.request_timeout)
-            async with session.post(self.ollama_url, json=payload, timeout=timeout, auth=auth) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    return data.get("response", "No response generated")
-                else:
-                    raise Exception(f"Ollama API error: {resp.status}")
+            try:
+                async with session.post(self.ollama_url, json=payload, timeout=timeout, auth=auth) as resp:
+                    if resp.status == 200:
+                        data = await resp.json()
+                        return data.get("response", "No response generated")
+                    else:
+                        error_text = (await resp.text())[:300]
+                        raise Exception(f"Ollama API error: {resp.status} at {self.ollama_url} | {error_text}")
+            except asyncio.TimeoutError:
+                logger.error(f"Timeout connecting to Ollama at {self.ollama_url}")
+                raise
+            except OSError as e:
+                logger.error(f"Network error connecting to Ollama at {self.ollama_url}: {e}")
+                raise Exception(f"Cannot connect to Ollama: {e}")
+            except Exception as e:
+                logger.error(f"Error in generate_response: {type(e).__name__}: {e}")
+                raise
 
-async def setup(bot):
+def setup(bot: discord.Bot):
     if (
         os.getenv("OLLAMA_URL") is None or
         os.getenv("OLLAMA_MODEL") is None
     ):
-        print("OLLAMA_URL and OLLAMA_MODEL environment variables must be set for LLMChat cog.")
+        logger.info("OLLAMA_URL and OLLAMA_MODEL environment variables must be set for LLMChat cog.")
         return
-    await bot.add_cog(LLMChat(bot))
+    bot.add_cog(LLMChat(bot))
