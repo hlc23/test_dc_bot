@@ -12,6 +12,9 @@ COPY ./utils /app/utils
 COPY ./main.py /app/
 COPY ./requirements.txt /app/
 
+# Install build dependencies required for packages that need C compilation (e.g. aiohttp)
+RUN apt-get update && apt-get install -y --no-install-recommends gcc build-essential && rm -rf /var/lib/apt/lists/*
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
