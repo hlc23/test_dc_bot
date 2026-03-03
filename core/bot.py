@@ -12,7 +12,7 @@ class Mybot(Bot):
         super().__init__(*args, **kwargs)
         self.config = load_config()
         self.AUTHOR_ID: int = self.config["author_id"]
-        self.VERSION = "2.2.0"
+        self.VERSION = "2.2.1"
         self.loaded_cogs = []
         self.load_cogs()
         
