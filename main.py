@@ -31,7 +31,7 @@ def main():
         logger.info("%s v%s is ready and online!", bot.user, bot.VERSION)
         logger.info("===============")
         embed = Embed(title="Bot is ready!", description=f"{bot.user} v{bot.VERSION} is ready and online!")
-        # await bot.owner.send(embed=embed)
+        await bot.owner.send(embed=embed)
         return
 
     @bot.slash_command(name = "reload", description = "Reload bot")
