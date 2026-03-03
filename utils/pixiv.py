@@ -1,7 +1,9 @@
 # from json import dump
 from pixivpy3 import *
+import dotenv
+import os
 
-REFRESH_TOKEN = "Dv72iY_Mv2vqfcAhSB98x9K_0W85PYOy7h3t9PLe_Aw"
+REFRESH_TOKEN = os.getenv("PIXIV_REFRESH_TOKEN")
 
 def recommended():
     api = AppPixivAPI()
