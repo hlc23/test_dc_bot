@@ -76,21 +76,11 @@ class LLMChat(commands.Cog):
                             await message.remove_reaction(self.thinking_emoji, self.bot.user)
                         except discord.HTTPException:
                             pass
-                except asyncio.TimeoutError:
-                    if thinking_reaction_added:
-                        try:
-                            await message.remove_reaction(self.thinking_emoji, self.bot.user)
-                        except discord.HTTPException:
-                            pass
-                    try:
-                        await message.add_reaction(self.timeout_emoji)
-                    except discord.HTTPException:
-                        pass
-                    await message.reply("Request timed out, please try again.")
                 except Exception:
                     if thinking_reaction_added:
                         try:
                             await message.remove_reaction(self.thinking_emoji, self.bot.user)
+                            await message.add_reaction(self.timeout_emoji)
                         except discord.HTTPException:
                             pass
                     await message.reply(f"-# {self.bot.user.mention} 好像睡著了...沒有任何回應...")
