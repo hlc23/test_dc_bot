@@ -40,7 +40,7 @@ def main():
         # reload env variables
         dotenv.load_dotenv()
         success, error = bot.reload_cogs()
-        await ctx.send(f"Successfully reloaded {len(success)} cogs.")
+        await ctx.send_response(f"Successfully reloaded {len(success)} cogs.", ephemeral=True)
         return
 
     @bot.event
@@ -51,11 +51,11 @@ def main():
     async def cogs(ctx: discord.ApplicationContext):
         loaded_cogs = bot.list_cogs()
         if not loaded_cogs:
-            await ctx.send("No cogs are currently loaded.")
+            await ctx.send_response("No cogs are currently loaded.", ephemeral=True)
             return
         
         embed = Embed(title="Loaded Cogs", description="\n".join(loaded_cogs))
-        await ctx.send_response(embed=embed)
+        await ctx.send_response(embed=embed, ephemeral=True)
 
     bot.run(os.getenv("TOKEN"))
 
