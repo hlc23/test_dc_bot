@@ -10,6 +10,7 @@
         "command.translation",
         "event.respond",
         "command.prefix",
-        "command.emoji_text"
+        "command.emoji_text",
+        "event.llm_chat"
     ]
 }

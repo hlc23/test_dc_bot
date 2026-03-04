@@ -65,7 +65,7 @@ class LLMChat(commands.Cog):
 
             async with message.channel.typing():
                 try:
-                    response = await self.generate_response(message.content)
+                    response = await self.generate_response(message)
                     
                     if len(response) > 2000:
                         response = response[:1997] + "..."
@@ -93,15 +93,22 @@ class LLMChat(commands.Cog):
                             await message.remove_reaction(self.thinking_emoji, self.bot.user)
                         except discord.HTTPException:
                             pass
-                    await message.reply(f"-# {self.bot.user.mention} 好像睡著了...")
+                    await message.reply(f"-# {self.bot.user.mention} 好像睡著了...沒有任何回應...")
     
-    async def generate_response(self, prompt: str) -> str:
+    async def generate_response(self, message: discord.Message) -> str:
+        prompt = message.content
+        
+        if message.mentions: # replace mentions with usernames for better context
+            for user in message.mentions:
+                prompt = prompt.replace(f"<@{user.id}>", f"@{user.name}")
+                prompt = prompt.replace(f"<@!{user.id}>", f"@{user.name}")
+        
         if not prompt.strip():
             prompt = "Hi, how are you?"
-            
+        
         payload = {
             "model": self.model,
-            "prompt": f"{self.PROMPT_TEMPLATE}\n\n```{prompt}```",
+            "prompt": f"{self.PROMPT_TEMPLATE}\n\n{message.author.mention}```{prompt}```",
             "stream": False
         }
         auth = None
