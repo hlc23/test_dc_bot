@@ -96,9 +96,17 @@ class LLMChat(commands.Cog):
         if not prompt.strip():
             prompt = "Hi, how are you?"
         
+        reply = ""
+        if message.reference:
+            try:
+                ref_message = await message.channel.fetch_message(message.reference.message_id)
+                reply = f"Previous message:\n{ref_message.author.mention}: {ref_message.content}\n\n"
+            except discord.NotFound:
+                pass
+        
         payload = {
             "model": self.model,
-            "prompt": f"{self.PROMPT_TEMPLATE}\n\n{message.author.mention}```{prompt}```",
+            "prompt": f"{self.PROMPT_TEMPLATE}\n\n{reply}Response for {message.author.mention}:\n```{prompt}```",
             "stream": False
         }
         auth = None
