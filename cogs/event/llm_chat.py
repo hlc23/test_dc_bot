@@ -60,6 +60,8 @@ class LLMChat(commands.Cog):
                                 await message.reply(response[:cut_point])
                                 response = response[cut_point:].lstrip()
                                 break
+                    else:
+                        await message.reply(response)
                     
                     if thinking_reaction_added:
                         try:
